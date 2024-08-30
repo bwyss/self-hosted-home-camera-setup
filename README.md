@@ -1,5 +1,5 @@
 # Self hosted home camera setup
-### Ubuntu, CasaOS, Frigate, Home Assistant, Reolink, Google Coral TPU setup guid
+### Ubuntu, CasaOS, Frigate, Home Assistant, Reolink, Google Coral TPU setup guide
 
 ### Requirements
 Dedicated "server" PC with:
@@ -8,16 +8,16 @@ Dedicated "server" PC with:
 - Linux: 64-bit version of Debian 10 or Ubuntu 16.04 (up to 20.04), and an x86-64 or ARMv8 system architecture
 - Python 3.6-3.9
 - Camera (wired and PoE)
-- Eathernet Switch
-- USB drive (for ubuntu instalation)
+- Ethernet Switch
+- USB drive (for ubuntu installation)
 
 
 ### Overview
-DO NOT USE Ubuntu version > 20.04. Ubuntu 20.04 (desktop in my case) is needed because it is using a kernal version 5.15.0-67-generic which is compatable with the Edge TPU runtime and the TensorFlow Lite runtime software used for the Google Coral TPU hardware.
+DO NOT USE Ubuntu version > 20.04. Ubuntu 20.04 (desktop in my case) is needed because it is using a kernel version 5.15.0-67-generic which is compatible with the Edge TPU runtime and the TensorFlow Lite runtime software used for the Google Coral TPU hardware.
 
-The Google Coral TPU chip is needed for all of the object detection that frigate is going to be doing on the video streems. Without this chip, the system will use exsesive GPU for the processing. My motherboard has a Mini M.2 slot so I [purchased this chip](https://www.amazon.com/dp/B0CY2C6FV4?ref=ppx_yo2ov_dt_b_fed_asin_title).
+The Google Coral TPU chip is needed for all of the object detection that frigate is going to be doing on the video streams. Without this chip, the system will use excessive GPU for the processing. My motherboard has a Mini M.2 slot so I [purchased this chip](https://www.amazon.com/dp/B0CY2C6FV4?ref=ppx_yo2ov_dt_b_fed_asin_title).
 
-I am using CasaOs for easy docker managment (firgate and home assistante will be install with CasaOS on top of ubuntu desktop)
+I am using CasaOs for easy docker management (Frigate and Home Assistant will be install with CasaOS on top of ubuntu desktop)
 
 I'm using [Reolink](https://www.amazon.com/gp/product/B09873G7X3/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1) cameras with a [switch](https://www.amazon.com/gp/product/B076PRM2C5/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1)
 
@@ -35,9 +35,9 @@ Here is the [wiki docs](https://wiki.casaos.io/en/get-started), but all you need
 At the end of the instalation it will tell you the IP address thatCasoOS will be running on, in my case: [http://10.0.0.32/](http://10.0.0.32/), you should be able to access this address from any device that is on your home network.
 
 ### Step 4 Install Frigate
-CasaOS has a nifty app store, but it does not include Frigate, [so here is a guied for that](https://www.youtube.com/watch?v=y6YW1OvoDK4&t=204s).
+CasaOS has a nifty app store, but it does not include Frigate, [so here is a guide for that](https://www.youtube.com/watch?v=y6YW1OvoDK4&t=204s).
 
-I skipped the step for installing the Frigate config and jsut added my own after the installation. To add the Frigate config, go to the CasaOS home screen and click on files. Then navigate to DATA/AppData/frigate/config and open the config.yml file. Refer to the [Frigate docs](https://docs.frigate.video/) for configuring this for your needs, but here is a sample to get you started:
+I skipped the step for installing the Frigate config and just added my own after the installation. To add the Frigate config, go to the CasaOS home screen and click on files. Then navigate to DATA/AppData/frigate/config and open the config.yml file. Refer to the [Frigate docs](https://docs.frigate.video/) for configuring this for your needs, but here is a sample to get you started:
 
 ```bash
 mqtt:
@@ -86,8 +86,8 @@ cameras:
         - bear
 version: 0.14
 ```
-You can not open the Frigare app in CasaOS and you should be able to see the camera(s) feeds. You can configure as many cameras as you have in the Frigate config.
-If you don't see your camera feed you can check the docker logs by opening a terminal and following these stpes:
+You can not open the Frigate app in CasaOS and you should be able to see the camera(s) feeds. You can configure as many cameras as you have in the Frigate config.
+If you don't see your camera feed you can check the docker logs by opening a terminal and following these steps:
 ``` bash
 docker ps
 ```
@@ -101,7 +101,7 @@ Next run:
 docker logs <YOURDOCKERIMAGEID>
 ```
 
-Check the logs for erros or give the logs to chatGPT and debug as needed.
+Check the logs for errors or give the logs to chatGPT and debug as needed.
 
 Once the Frigate config is happy you will see your camera feed.
 
@@ -125,4 +125,6 @@ Open CasaOS and open the Home Assistant app.
 - Use the search bar to look for "hacs". Click on HACS.
 - Check everything (it’s optional) and click Submit.
 - Open HACS and add Frigate
-Now you can access Frigate in Media.
+
+  
+Now you can access Frigate in Media using Home Assistant

@@ -24,14 +24,17 @@ I'm using [Reolink](https://www.amazon.com/gp/product/B09873G7X3/ref=ppx_yo_dt_b
 ### Step 1 Install Ubuntu 20.4
 Follow [this guide](https://ubuntu.com/tutorials/install-ubuntu-desktop#4-boot-from-usb-flash-drive) for the installation off of a USB drive
 
-### Step 2 Install CasaOS
+### Step 2 Install the PCIe driver and Edge TPU runtime
+[Follow this guide](https://coral.ai/docs/m2/get-started/#1-connect-the-module)
+
+### Step 3 Install CasaOS
 ```bash
 wget -qO- https://get.casaos.io | sudo bash
 ```
 Here is the [wiki docs](https://wiki.casaos.io/en/get-started), but all you need is to run that command ^^
 At the end of the instalation it will tell you the IP address thatCasoOS will be running on, in my case: [http://10.0.0.32/](http://10.0.0.32/), you should be able to access this address from any device that is on your home network.
 
-### Step 3 Install Frigate
+### Step 4 Install Frigate
 CasaOS has a nifty app store, but it does not include Frigate, [so here is a guied for that](https://www.youtube.com/watch?v=y6YW1OvoDK4&t=204s).
 
 I skipped the step for installing the Frigate config and jsut added my own after the installation. To add the Frigate config, go to the CasaOS home screen and click on files. Then navigate to DATA/AppData/frigate/config and open the config.yml file. Refer to the [Frigate docs](https://docs.frigate.video/) for configuring this for your needs, but here is a sample to get you started:
@@ -101,3 +104,25 @@ docker logs <YOURDOCKERIMAGEID>
 Check the logs for erros or give the logs to chatGPT and debug as needed.
 
 Once the Frigate config is happy you will see your camera feed.
+
+### Step 5 Install Home Assistant w/ HACS & Frigate
+Home Assistant will allow you to view your Frigate clips, recording and snapshots. Frigate can be added to Home Assistant using the HACS plugin manager. HACS can be added to HA using the "Add On Store" feature, but the Add On Store  is not available in the docker version of HA. So you will need to follow these steps:
+
+In a terminal, navigate to the home assistant directory
+```bash
+cd DATA/AppData/homeassistant/config
+```
+Then add HACS:
+```bash
+wget -O - https://get.hacs.xyz | bash -
+```
+Then reboot your server:
+```bash
+sudo reboot
+```
+Open CasaOS and open the Home Assistant app. 
+- Go to Settings > Devices & Services and then click the Add Integration button.
+- Use the search bar to look for "hacs". Click on HACS.
+- Check everything (it’s optional) and click Submit.
+- Open HACS and add Frigate
+Now you can access Frigate in Media.

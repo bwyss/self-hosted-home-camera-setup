@@ -1,2 +1,103 @@
-# self-hosted-home-camera-setup
-Ubuntu, CasaOS, Frigate, Home Assistant, Reolink setup guid
+# Self hosted home camera setup
+### Ubuntu, CasaOS, Frigate, Home Assistant, Reolink, Google Coral TPU setup guid
+
+### Requirements
+Dedicated "server" PC with:
+- Plenty of storage and one
+- At least one available Mini PCIe or M.2 module slot
+- Linux: 64-bit version of Debian 10 or Ubuntu 16.04 (up to 20.04), and an x86-64 or ARMv8 system architecture
+- Python 3.6-3.9
+- Camera (wired and PoE)
+- Eathernet Switch
+- USB drive (for ubuntu instalation)
+
+
+### Overview
+DO NOT USE Ubuntu version > 20.04. Ubuntu 20.04 (desktop in my case) is needed because it is using a kernal version 5.15.0-67-generic which is compatable with the Edge TPU runtime and the TensorFlow Lite runtime software used for the Google Coral TPU hardware.
+
+The Google Coral TPU chip is needed for all of the object detection that frigate is going to be doing on the video streems. Without this chip, the system will use exsesive GPU for the processing. My motherboard has a Mini M.2 slot so I [purchased this chip](https://www.amazon.com/dp/B0CY2C6FV4?ref=ppx_yo2ov_dt_b_fed_asin_title).
+
+I am using CasaOs for easy docker managment (firgate and home assistante will be install with CasaOS on top of ubuntu desktop)
+
+I'm using [Reolink](https://www.amazon.com/gp/product/B09873G7X3/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1) cameras with a [switch](https://www.amazon.com/gp/product/B076PRM2C5/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1)
+
+### Step 1 Install Ubuntu 20.4
+Follow [this guide](https://ubuntu.com/tutorials/install-ubuntu-desktop#4-boot-from-usb-flash-drive) for the installation off of a USB drive
+
+### Step 2 Install CasaOS
+```bash
+wget -qO- https://get.casaos.io | sudo bash
+```
+Here is the [wiki docs](https://wiki.casaos.io/en/get-started), but all you need is to run that command ^^
+At the end of the instalation it will tell you the IP address thatCasoOS will be running on, in my case: [http://10.0.0.32/](http://10.0.0.32/), you should be able to access this address from any device that is on your home network.
+
+### Step 3 Install Frigate
+CasaOS has a nifty app store, but it does not include Frigate, [so here is a guied for that](https://www.youtube.com/watch?v=y6YW1OvoDK4&t=204s).
+
+I skipped the step for installing the Frigate config and jsut added my own after the installation. To add the Frigate config, go to the CasaOS home screen and click on files. Then navigate to DATA/AppData/frigate/config and open the config.yml file. Refer to the [Frigate docs](https://docs.frigate.video/) for configuring this for your needs, but here is a sample to get you started:
+
+```bash
+mqtt:
+  enabled: false
+detectors:
+  coral:
+    type: edgetpu
+    device: pci
+cameras:
+  Driveway:
+    enabled: true
+    ffmpeg:
+      hwaccel_args:
+        - '-c:v:1'
+        - h264_v4l2m2m
+      inputs:
+        # Get your camera IP address from the network settings in the camera app
+        # Get the stream info from your camera docs e.g. h264Preview_01_main which is going to be different for every type of camera
+        - path: 'rtsp://admin:YOURPASS@10.0.0.54:554/h264Preview_01_main' 
+          roles:
+            - detect
+        - path: 'rtsp://admin:YOURPASS@10.0.0.54:554/h264Preview_01_sub'
+          roles:
+            - record
+    detect:
+      # Height and width can be found in your cameras app
+      width: 640
+      height: 360
+      fps: 10
+    snapshots:
+      enabled: true
+    record:
+      enabled: true
+    motion:
+      threshold: 25
+      contour_area: 100
+      delta_alpha: 0.2
+      frame_alpha: 0.2
+    objects:
+      track:
+        - person
+        - cat
+        - dog
+        - bird
+        - car
+        - bear
+version: 0.14
+```
+You can not open the Frigare app in CasaOS and you should be able to see the camera(s) feeds. You can configure as many cameras as you have in the Frigate config.
+If you don't see your camera feed you can check the docker logs by opening a terminal and following these stpes:
+``` bash
+docker ps
+```
+You will get an output like this, which contains the docker image id:
+``` ls
+d33218b513e1 ghcr.io/blakeblackshear/frigate:stable
+```
+
+Next run:
+``` bash
+docker logs <YOURDOCKERIMAGEID>
+```
+
+Check the logs for erros or give the logs to chatGPT and debug as needed.
+
+Once the Frigate config is happy you will see your camera feed.

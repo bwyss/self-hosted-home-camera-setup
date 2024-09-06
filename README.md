@@ -126,5 +126,6 @@ Open CasaOS and open the Home Assistant app.
 - Check everything (it’s optional) and click Submit.
 - Open HACS and add Frigate
 
-  
+In Home Assistant go to settings > Device and Services, then Add Integration, seach for and add Frigate. 
+
 Now you can access Frigate in Media using Home Assistant

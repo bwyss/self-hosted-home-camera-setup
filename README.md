@@ -110,7 +110,7 @@ Home Assistant will allow you to view your Frigate clips, recording and snapshot
 
 In a terminal, navigate to the home assistant directory
 ```bash
-cd DATA/AppData/homeassistant/config
+cd /DATA/AppData/homeassistant/config
 ```
 Then add HACS:
 ```bash

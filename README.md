@@ -126,6 +126,85 @@ Open CasaOS and open the Home Assistant app.
 - Check everything (it’s optional) and click Submit.
 - Open HACS and add Frigate
 
-In Home Assistant go to settings > Device and Services, then Add Integration, seach for and add Frigate. 
+In Home Assistant go to settings > Device and Services, then Add Integration, seach for and add Frigate.
 
 Now you can access Frigate in Media using Home Assistant
+s
+### Step 5 MQTT Notifications using the Mosquitto Broker and Frigate Notifications
+
+In CasaOS install a new custom app and add the mosquitto docker compose file:
+
+``` bash
+name: practical_ofir
+services:
+  mosquitto:
+    cpu_shares: 90
+    command: []
+    container_name: mosquitto
+    deploy:
+      resources:
+        limits:
+          memory: 15926M
+    environment:
+      - MQTT_PASSWORD=<yourPass>
+      - MQTT_USERNAME=<yourName>
+    hostname: mosquitto
+    image: eclipse-mosquitto:latest
+    ports:
+      - target: 1883
+        published: "1883"
+        protocol: tcp
+      - target: 9001
+        published: "9001"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mosquitto/data
+        target: /mosquitto/data
+      - type: bind
+        source: /DATA/AppData/mosquitto/config
+        target: /mosquitto/config
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: ""
+  index: /
+  is_uncontrolled: false
+  port_map: "1883"
+  scheme: http
+  store_app_id: practical_ofir
+  title:
+    custom: mosquitto
+```
+Once mosquitto is installed and running, navigate to /DATA/AppData/mosquitto/config and create a mosquitto.conf file and populate it with:
+
+``` bash
+listener 1883
+allow_anonymous true
+password_file /mosquitto/config/passwd
+```
+
+In the future change allow_anonymous to true and extend this with a user name and password. Keep allow_anonymous false for testing.
+
+Extend the frigate config with:
+```batch
+mqtt:
+  host: <YourIPAddress>
+  port: 1883
+  #user: <yourUserName>
+  #password: <yourPassword>
+  client_id: frigate
+  topic_prefix: frigate
+```
+
+In home assistant, add the MQTT integration and test as needed to make sure that it is able to listen to frigate topics.
+
+In home assistant, add the [Frigate Notification blueprint](https://community.home-assistant.io/t/frigate-mobile-app-notifications-2-0/559732)
+
+Add hoem assistant automations as needed based on frigate entities.

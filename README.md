@@ -4,7 +4,7 @@
 ### Requirements
 Dedicated "server" PC with:
 - Plenty of storage
-- At least one available Mini PCIe or M.2 module slot
+- At least one available Mini PCIe or M.2 module motherboard slot
 - Linux: 64-bit version of Debian 10 or Ubuntu 16.04 (up to 20.04), and an x86-64 or ARMv8 system architecture
 - Python 3.6-3.9
 - Camera (wired and PoE) - in my case REOLINK RLC-811A PoE IP Security Camera
@@ -13,11 +13,18 @@ Dedicated "server" PC with:
 
 
 ### Overview
+This setup offers:
+- Self hoseting for security cameras
+- Object detection
+- Notifications
+- Live view
+- Access to media clips, recordings and snapshots 
+
 DO NOT USE Ubuntu version > 20.04. Ubuntu 20.04 (desktop in my case) is needed because it is using a kernel version 5.15.0-67-generic which is compatible with the Edge TPU runtime and the TensorFlow Lite runtime software used for the Google Coral TPU hardware.
 
 The Google Coral TPU chip is needed for all of the object detection that frigate is going to be doing on the video streams. Without this chip, the system will use excessive GPU for the processing. My motherboard has a Mini M.2 slot so I [purchased this chip](https://www.amazon.com/dp/B0CY2C6FV4?ref=ppx_yo2ov_dt_b_fed_asin_title).
 
-I am using CasaOs for easy docker management (Frigate and Home Assistant will be install with CasaOS on top of ubuntu desktop)
+I am using CasaOs for easy docker management (Frigate, Eclipse Mosquitto and Home Assistant will be install with CasaOS on top of ubuntu desktop)
 
 I'm using [Reolink](https://www.amazon.com/gp/product/B09873G7X3/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1) cameras with a [switch](https://www.amazon.com/gp/product/B076PRM2C5/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1)
 

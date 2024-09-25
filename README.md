@@ -7,7 +7,7 @@ Dedicated "server" PC with:
 - At least one available Mini PCIe or M.2 module slot
 - Linux: 64-bit version of Debian 10 or Ubuntu 16.04 (up to 20.04), and an x86-64 or ARMv8 system architecture
 - Python 3.6-3.9
-- Camera (wired and PoE) (in my case REOLINK RLC-811A PoE IP Security Camera)
+- Camera (wired and PoE) - in my case REOLINK RLC-811A PoE IP Security Camera
 - Ethernet Switch
 - USB pen drive (for ubuntu installation)
 

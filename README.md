@@ -9,7 +9,7 @@ Dedicated "server" PC with:
 - Python 3.6-3.9
 - Camera (wired and PoE) (in my case REOLINK RLC-811A PoE IP Security Camera)
 - Ethernet Switch
-- USB drive (for ubuntu installation)
+- USB pen drive (for ubuntu installation)
 
 
 ### Overview

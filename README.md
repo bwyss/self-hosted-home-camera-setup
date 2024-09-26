@@ -215,3 +215,7 @@ In home assistant, add the MQTT integration and test as needed to make sure that
 In home assistant, add the [Frigate Notification blueprint](https://community.home-assistant.io/t/frigate-mobile-app-notifications-2-0/559732)
 
 Add hoem assistant automations as needed based on frigate entities.
+
+### Step 6 Remote Access
+
+[tailscale](https://tailscale.com/) vpn

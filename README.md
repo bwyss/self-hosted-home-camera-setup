@@ -1,7 +1,8 @@
 # Self Hosted Home Camera Setup
 ### Ubuntu, CasaOS, Frigate, Home Assistant, Reolink, Google Coral TPU setup guide
 
-![Screenshot-20241001081715-1026x214](https://github.com/user-attachments/assets/35c8d9f1-1b02-4516-8ca5-75232d4159c8)
+![Screenshot-20241001081922-1498x919](https://github.com/user-attachments/assets/b62672c6-d024-4032-bd9b-48883350e02d)
+
 
 ### Requirements
 Dedicated "server" PC with:

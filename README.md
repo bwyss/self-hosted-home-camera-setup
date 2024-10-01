@@ -103,7 +103,7 @@ docker ps
 ```
 You will get an output like this, which contains the docker image id:
 ``` ls
-d33218b513e1 ghcr.io/blakeblackshear/frigate:stable
+<YOURDOCKERIMAGEID> ghcr.io/blakeblackshear/frigate:stable
 ```
 
 Next run:
@@ -116,6 +116,9 @@ Check the logs for errors or give the logs to chatGPT and debug as needed.
 Once the Frigate config is happy you will see your camera feed.
 
 ### Step 5 Install Home Assistant w/ HACS & Frigate
+
+![Screenshot-20241001082036-1558x668](https://github.com/user-attachments/assets/2ec84288-9cd0-480d-82f7-9fd9a7177abc)
+
 Home Assistant will allow you to view your Frigate clips, recording and snapshots. Frigate can be added to Home Assistant using the HACS plugin manager. HACS can be added to HA using the "Add On Store" feature, but the Add On Store  is not available in the docker version of HA. So you will need to follow these steps:
 
 In a terminal, navigate to the home assistant directory

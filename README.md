@@ -96,7 +96,7 @@ cameras:
         - bear
 version: 0.14
 ```
-You can not open the Frigate app in CasaOS and you should be able to see the camera(s) feeds. You can configure as many cameras as you have in the Frigate config.
+You can open the Frigate app in CasaOS and you should be able to see the camera(s) feeds. You can configure as many cameras as you have in the Frigate config.
 If you don't see your camera feed you can check the docker logs by opening a terminal and following these steps:
 ``` bash
 docker ps

@@ -142,7 +142,7 @@ Open CasaOS and open the Home Assistant app.
 In Home Assistant go to settings > Device and Services, then Add Integration, seach for and add Frigate.
 
 Now you can access Frigate in Media using Home Assistant
-s
+
 ### Step 5 MQTT Notifications using the Mosquitto Broker and Frigate Notifications
 
 In CasaOS install a new custom app and add the mosquitto docker compose file:
@@ -220,7 +220,7 @@ In home assistant, add the MQTT integration and test as needed to make sure that
 
 In home assistant, add the [Frigate Notification blueprint](https://community.home-assistant.io/t/frigate-mobile-app-notifications-2-0/559732)
 
-Add hoem assistant automations as needed based on frigate entities.
+Add home assistant automations as needed based on frigate entities.
 
 ### Step 6 Remote Access
 
